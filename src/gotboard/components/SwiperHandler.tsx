@@ -12,7 +12,6 @@ function SwiperHandler(props){
     `
 
     const renderSwiperItem = () => {
-        console.log(contents);
         return contents.map((item) => {
             return (
                 <SwiperItem>{item}</SwiperItem>

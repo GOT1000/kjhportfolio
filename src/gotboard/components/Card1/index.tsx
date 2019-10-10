@@ -27,9 +27,17 @@ const Wrapper = styled.div`
     flex-direction: column;
 `
 
-const WrapperBg = styled.div`
+const BgWrapper = styled.div`
+    width: 100%;
+    height: 110%;
+    top: -10%;
+    position: absolute;
+`
+
+const Bg = styled.div`
     width: 100%;
     height: 100%;
+    top: 0;
     position: absolute;
     background: linear-gradient(270deg, ${colors.CARD1_BACKGROUND_1}, ${colors.CARD1_BACKGROUND_2}, ${colors.CARD1_BACKGROUND_3});
     background-size: 600% 600%;
@@ -38,14 +46,11 @@ const WrapperBg = styled.div`
     transform: scale(0.95);
     transition: opacity .5s cubic-bezier(0.19, 1, 0.22, 1), transform .8s cubic-bezier(0.19, 1, 0.22, 1);
 
-    &.visible {
+    ${BgWrapper}.visible & {
       opacity: 1;
       transform: scale(1);
       transition: opacity .5s cubic-bezier(0.19, 1, 0.22, 1), transform .8s cubic-bezier(0.19, 1, 0.22, 1);
     }
-`
-const Strong = styled.span`
-    font-family: "NanumSquareEB";
 `
 
 const Title = styled.h1`
@@ -144,7 +149,7 @@ const BtnContent = styled.div`
     height: ${rem(30)};
 
     opacity: 0;
-    transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s,transform 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s;
+    transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s;
 
     &:hover ${MoreBtn} {
       opacity: 0.7;
@@ -152,7 +157,7 @@ const BtnContent = styled.div`
 
     &.visible {
       opacity: 1;
-      transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s,transform 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s;
+      transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s;
     
       animation: ${float} 2s ease-in-out infinite;
       animation-delay: .75s;
@@ -180,7 +185,9 @@ function Card1(props) {
             triggerHook={'onLeave'}
             classToggle={'visible'}
           >
-            <WrapperBg />
+            <BgWrapper>
+              <Bg />
+            </BgWrapper>
           </Scene>
           <Scene
             duration={containerHeight} 

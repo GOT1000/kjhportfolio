@@ -122,35 +122,6 @@ const Status = styled.div`
     }
   `
 
-const StatusBar = styled.div`
-    width: 100%;
-    background-color: ${colors.STATUS_BAR_BACKGROUND};
-    height: ${rem(30)};
-    border-radius: ${rem(15)};
-
-    transition-delay: .4s;
-
-    display: flex;
-
-    ${Bar} {
-      width: 0;
-      background-color: ${colors.STATUS_BAR_COLOR};
-      height: 100%;
-      border-radius: ${rem(15)};
-      border-color: ${colors.STATUS_BAR_COLOR};
-      
-      ${props => props.progress ? 
-        css`
-          background-color: ${colors.STATUS_BAR_COLOR2};
-          width: ${props => props.status + '%'};
-          transition: width .6s cubic-bezier(.02,.47,.58,.86) ${props.duration}, background-color 2s ease-in-out;
-        ` : 
-        css`
-          transition: width .2s ${props.duration}, background-color 2s ease-in-out;
-        `
-      }
-`
-
   const StatusTitle = styled.div`
     width: ${rem(120)};
     padding: ${rem(6)} 0;
@@ -202,6 +173,38 @@ const StatusWrapper = styled.div`
   }
 `
 
+const StatusBar = styled.div`
+    width: 100%;
+    background-color: ${colors.STATUS_BAR_BACKGROUND};
+    height: ${rem(30)};
+    border-radius: ${rem(15)};
+
+    transition-delay: .4s;
+
+    display: flex;
+
+    ${Bar} {
+      width: 0;
+      background-color: ${colors.STATUS_BAR_COLOR};
+      height: 100%;
+      border-radius: ${rem(15)};
+      border-color: ${colors.STATUS_BAR_COLOR};
+      
+      ${props => 
+        css`
+          ${StatusWrapper} & {
+            transition: width .2s ${props.duration}, background-color 2s ease-in-out;
+          }
+          ${StatusWrapper}.visible & {
+              background-color: ${colors.STATUS_BAR_COLOR2};
+              width: ${props => props.status + '%'};
+              transition: width .6s cubic-bezier(.02,.47,.58,.86) ${props.duration}, background-color 2s ease-in-out;
+          }
+        `
+      }
+    }
+`
+
 function Card2(props) {
   const [containerHeight, setContainerHeight] = useState(100);
 
@@ -210,14 +213,12 @@ function Card2(props) {
   }
 
 
-  const StatusBars = (progress, ...props) => {
-
-
+  const StatusBars = (...props) => {
     return MY_STATUS.map((item, index) => {
       return (
         <Status key={index}>
           <StatusTitle>{item.title}</StatusTitle>
-          <StatusBar progress={progress} status={item.status} duration={item.duration}>
+          <StatusBar status={item.status} duration={item.duration}>
             <Bar></Bar>
           </StatusBar>
         </Status>
@@ -269,16 +270,13 @@ function Card2(props) {
           triggerElement={'#card2_status_wrapper'}
           triggerHook={0.55}
           classToggle={'visible'}
-        >{
-          (progress) => (
+        >
             <StatusWrapper>
               <Title>
                 제 개발 스택은 이렇습니다.
               </Title>
-              {StatusBars(progress)}
+              {StatusBars()}
             </StatusWrapper>
-          )
-        }
         </Scene>
       </Controller>
     </Wrapper>

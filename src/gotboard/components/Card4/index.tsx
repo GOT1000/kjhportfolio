@@ -16,7 +16,8 @@ import { getEntireHeight } from 'lib/const'
 
 const Wrapper = styled.div`
   padding: ${rem(120)} ${rem(20)} ${rem(80)} ${rem(20)};
-
+  height: 1000px;
+  
   font-family: 'NanumSquare';
 `
 

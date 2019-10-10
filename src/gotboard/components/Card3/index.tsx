@@ -50,6 +50,99 @@ const TitleWrapper = styled.div`
 `
 
 
+const customModalWrapperStyle = css`
+.rodal-dialog {
+  width: 100%!important;
+  height: 100vh!important;
+  top: 0;
+  border-radius: 0;
+  padding: 0;
+  overflow: hidden;
+
+  ${notMobile(css`
+    top: -6vh;
+    padding-top: 3vh;
+    max-width: ${rem(700)};
+  `)}
+}
+
+.rodal-close {
+  display: none;
+}
+`
+
+const Thumbnail = styled.img.attrs((props) => ({
+src: props.src || undefined,
+}))`
+  margin: auto;
+  display: block;
+  width: 100%;
+  max-width: ${rem(525)};
+`
+
+const ThumbnailWrapper = styled.div.attrs((props) => ({
+className: props.isOpen ? 'active' : '',
+}))`
+flex: 0 0 50%;
+padding: ${rem(15)};
+transition-delay: ${props => props.duration};
+
+${mobile(css`
+  max-width: ${rem(500)};
+  width: 100%;
+  padding: ${rem(20)} 0;
+`)}   
+`
+
+const PortfolioWrapper = styled.div`
+display: flex;
+flex-wrap: wrap;
+max-width: ${rem(850)};
+margin: ${rem(50)} auto ${rem(20)} auto;
+
+${mobile(css`
+  width: 100%;
+  flex-direction: column;
+  margin: ${rem(50)} auto 0;
+  max-width: ${rem(450)};
+
+`)}
+
+&:hover ${ThumbnailWrapper}:hover {
+  cursor: pointer;
+  ${Thumbnail} {
+    box-shadow: 0 0 20px rgba(0,0,0,0.25);
+    ${themeRowFadeIn}
+  }
+}
+
+&:hover ${ThumbnailWrapper} {
+  ${Thumbnail} {
+    ${themeRowFadeOut}
+  }
+}
+
+&:not(:hover) ${ThumbnailWrapper} {
+  ${Thumbnail} {
+    transform: scale(1) translateZ(0);
+    opacity: 1;
+    transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+}
+
+&.visible ${ThumbnailWrapper} {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+${ThumbnailWrapper} {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+}
+`
+
 function Card3(props) {
   const { onShowModal, hideModal } = props;
   
@@ -67,109 +160,10 @@ function Card3(props) {
   const renderModalBody = (item) => {
     return <PortfolioModal portfolio={item} hideModal={hideModal} />
   }
-
-  const customModalWrapperStyle = css`
-    .rodal-dialog {
-      width: 100%!important;
-      height: 100vh!important;
-      top: 0;
-      border-radius: 0;
-      padding: 0;
-      overflow: hidden;
-
-      ${notMobile(css`
-        top: -6vh;
-        padding-top: 3vh;
-        max-width: ${rem(700)};
-      `)}
-    }
-
-    .rodal-close {
-      display: none;
-    }
-  `
-
-  const Thumbnail = styled.img.attrs((props) => ({
-    src: props.src || undefined,
-  }))`
-      margin: auto;
-      display: block;
-      width: 100%;
-      max-width: ${rem(525)};
-    `
-
-  const ThumbnailWrapper = styled.div.attrs((props) => ({
-    className: props.isOpen ? 'active' : '',
-  }))`
-    flex: 0 0 50%;
-    padding: ${rem(15)};
-    transition-delay: ${props => props.duration};
-  
-    ${mobile(css`
-      max-width: ${rem(500)};
-      width: 100%;
-      padding: ${rem(20)} 0;
-    `)}   
-  `
-
-  const PortfolioWrapper = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    max-width: ${rem(850)};
-    margin: ${rem(50)} auto ${rem(20)} auto;
-
-    ${mobile(css`
-      width: 100%;
-      flex-direction: column;
-      margin: ${rem(50)} auto 0;
-      max-width: ${rem(450)};
-
-    `)}
-
-    &:hover ${ThumbnailWrapper}:hover {
-      cursor: pointer;
-      ${Thumbnail} {
-        box-shadow: 0 0 20px rgba(0,0,0,0.25);
-        ${themeRowFadeIn}
-      }
-    }
-
-    &:hover ${ThumbnailWrapper} {
-      ${Thumbnail} {
-        ${themeRowFadeOut}
-      }
-    }
-
-    &:not(:hover) ${ThumbnailWrapper} {
-      ${Thumbnail} {
-        transform: scale(1) translateZ(0);
-        opacity: 1;
-        transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
-      }
-    }
-
-    ${props => props.progress > 0 ?
-      css`
-        ${ThumbnailWrapper} {
-          opacity: 1;
-          transform: translateY(0);
-          transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-      ` : 
-      css`
-        ${ThumbnailWrapper} {
-          opacity: 0;
-          transform: translateY(50px);
-          transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-      `
-    }
-  `
-
   const renderPortfolioList = () => {
 
     const duration = isMobileWidth ? ['2s', '.2s', '.4s', '.4s'] : ['2s', '.4s', '.6s', '.8s']
-
+  
     return MY_PORTFOLIO.map((item, i) => {
       return (
         <ThumbnailWrapper 
@@ -186,6 +180,7 @@ function Card3(props) {
       )
     })
   }
+  
 
   return (
     <Wrapper>
@@ -209,13 +204,9 @@ function Card3(props) {
           triggerHook={0.55}
           classToggle={'visible'}
         >
-          {
-            (progress) => (
-              <PortfolioWrapper progress={progress}>
-                {renderPortfolioList()}
-              </PortfolioWrapper>
-            )
-          }
+          <PortfolioWrapper>
+            {renderPortfolioList()}
+          </PortfolioWrapper>
         </Scene>
       </Controller>
     </Wrapper>

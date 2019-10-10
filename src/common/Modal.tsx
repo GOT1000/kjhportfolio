@@ -5,19 +5,18 @@ import Rodal from 'rodal'
 // styles
 import { mobile } from 'styles/media'
 
-
+const StyledModal = styled(Rodal)`
+  ${props => props.modalStyle}
+`
 
 function Modal(props) {
   const { IsModalOpen, hideModal, modalStyle = css`` , modalItem } = props;
-
-  const StyledModal = styled(Rodal)`
-    ${modalStyle}
-  `
 
   return (
     <StyledModal 
         visible={IsModalOpen} 
         onClose={hideModal}
+        modalStyle={modalStyle}
     >
         {modalItem}
     </StyledModal>

@@ -3,8 +3,8 @@ import Head from 'next/head'
 import Router from 'next/router'
 import NProgress from 'nprogress'
 import styled from 'styled-components'
-//import ScrollMagic from 'scrollmagic'
-import ReactScroll, { Link, Element } from 'react-scroll'
+import { Element } from 'react-scroll'
+import { Controller, Scene } from 'react-scrollmagic'
 
 // contexts
 // hooks
@@ -14,11 +14,7 @@ import Card1 from 'gotboard/components/Card1'
 import Card2 from 'gotboard/components/Card2'
 import Card3 from 'gotboard/components/Card3'
 import Card4 from 'gotboard/components/Card4'
-import Card5 from 'gotboard/components/Card5'
-import WithIsScrolled from 'gotboard/components/WithIsScrolled'
-import ModalHandler from 'gotboard/components/ModalHandler'
 import Modal from 'common/Modal'
-import Rodal from 'rodal'
 // styles
 
 
@@ -83,19 +79,22 @@ export default function() {
                 <link rel="stylesheet" type="text/css" href="/static/css/slick-theme.css" />
             </Head>
             <div style={{ width: '100%' }}>
-            <WithIsScrolled>
-                {({ isScrolled }) => (
-                    <Navbar
-                        //showSideNav={false}
-                        transparent={!isScrolled}
-                        isMobileMenuToggle={isMobileMenuToggle}
-                        onMobileMenuToggle={toggleMobileMenu}
-                        //onRouteChange={this.onRouteChange}
-                    />
-                )}
-            </WithIsScrolled>
             </div>
-            <WrapperContainer id={'container'}>
+            <WrapperContainer>
+                <div id={'nav'}></div>
+                <Controller>
+                    <Scene
+                        triggerElement={'#nav'}
+                        triggerHook={'onLeave'}
+                        classToggle={'transparent'}
+                        indicators
+                    >
+                        <Navbar
+                            isMobileMenuToggle={isMobileMenuToggle}
+                            onMobileMenuToggle={toggleMobileMenu}
+                        />
+                    </Scene>
+                </Controller>
                 <Wrapper name={'card1'}>
                     <Card1/>
                 </Wrapper>

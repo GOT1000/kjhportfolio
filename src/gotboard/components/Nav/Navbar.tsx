@@ -27,15 +27,13 @@ const Wrapper = styled.div`
     color: ${colors.NAV_ITEM_COLOR};
     padding: 0;
 
-    ${props => props.transparent ? 
-        css`
-            background: transparent;
-        ` : 
-        css`
-            background: #fff;
-            color: ${colors.NAV_ITEM_COLOR2};
-            border-bottom: ${rem(1)} solid ${colors.NAV_BORDER};
-        `}
+    background: #fff;
+    color: ${colors.NAV_ITEM_COLOR2};
+    border-bottom: ${rem(1)} solid ${colors.NAV_BORDER};
+
+    &.transparent {
+        background-color: transparent;
+    }
 `
 const StartWrapper = styled.div`
     display: flex;
@@ -62,9 +60,9 @@ const NormalNavbar = styled.div`
 `
 
 function Navbar(props) {
-  const { isMobileMenuToggle, onMobileMenuToggle, transparent } = props
+  const { isMobileMenuToggle, onMobileMenuToggle } = props
   return (
-    <Wrapper transparent={transparent}>
+    <Wrapper>
         <NormalNavbar>
             <StartWrapper>
                 <Logo/>
@@ -76,7 +74,6 @@ function Navbar(props) {
         <MobileNavbar
             isMobileMenuToggle={isMobileMenuToggle}
             onMobileMenuToggle={onMobileMenuToggle}
-            transparent={transparent}
         />
     </Wrapper>
     
