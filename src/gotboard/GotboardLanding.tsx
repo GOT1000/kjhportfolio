@@ -4,7 +4,7 @@ import Router from 'next/router'
 import NProgress from 'nprogress'
 import styled from 'styled-components'
 import { Element } from 'react-scroll'
-import { Waypoint } from 'react-waypoint'
+import Waypoint from 'gotboard/components/Waypoint'
 
 // contexts
 // hooks

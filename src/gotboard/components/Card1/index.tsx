@@ -10,7 +10,7 @@ import * as colors from 'styles/colors'
 import * as sizes from 'styles/sizes'
 import { mobile, mobile2 } from 'styles/media'
 import rem from 'styles/rem'
-import { gradientBG, float } from 'styles/animations'
+import { gradientBG, moreBtnFloat } from 'styles/animations'
 
 // libs
 import { scrollTo } from 'lib/scroll'
@@ -128,39 +128,46 @@ const TitleWrapper = styled.div`
 `
 
 const MoreBtn = styled.div`
-    color: white;
-    border: solid #eee;
-    border-width: 0 ${rem(3)} ${rem(3)} 0;
-    display: inline-block;
-    padding: ${rem(15)};
-    transform: rotate(45deg);
+    width: ${rem(25)};
+    cursor: pointer;
+    margin: 0 auto;
 
-    ${mobile(css`
-      padding: ${rem(10)};
-    `)}
+    .btn {
+      width: 100%;
+      height: ${rem(25)};      
+      color: white;
+      border: solid #eee;
+      border-width: 0 ${rem(3)} ${rem(3)} 0;
+      display: block;
+      padding: ${rem(15)};
+      animation: ${moreBtnFloat} 2s ease-in-out infinite;
+      animation-delay: .75s;
+
+      transform: rotate(45deg);
+
+      ${mobile(css`
+        padding: ${rem(10)};
+      `)}
+    }
+
+    &:hover {
+      opacity: 0.7;
+    }
 `
 
 const BtnContent = styled.div`
     position: absolute;
     bottom: ${rem(30)};
-    cursor: pointer;
 
-    width: ${rem(30)};
-    height: ${rem(30)};
+    width: 100%;
+    height: ${rem(35)};
 
     opacity: 0;
-    transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s;
+    transition: opacity .5s cubic-bezier(0.19, 1, 0.22, 1);
 
-    &:hover ${MoreBtn} {
-      opacity: 0.7;
-    }
-
-    &.visible {
+    ${BgWrapper}.visible & {
       opacity: 1;
       transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s;
-    
-      animation: ${float} 2s ease-in-out infinite;
-      animation-delay: .75s;
     }
 `
 
@@ -184,30 +191,28 @@ function Card1(props) {
             triggerElement={'#card1'}
             triggerHook={'onLeave'}
             classToggle={'visible'}
+            offset={'-10%'}
+            indicators
           >
             <BgWrapper>
               <Bg />
+              <BtnContent>
+                <MoreBtn  onClick={() => scrollTo('card2')}>
+                  <div className={'btn'}/>
+                </MoreBtn>
+              </BtnContent>
             </BgWrapper>
           </Scene>
           <Scene
             duration={containerHeight} 
             triggerElement={'#card1'}
             classToggle={'visible'}
+            indicators
           >
             <Content>
               <Title>안녕하세요<br/>ooo의 포트폴리오입니다.</Title>
               <SmallTitle>Web Full Stack Developer</SmallTitle>
             </Content>
-          </Scene>
-          <Scene
-            duration={'100%'} 
-            triggerElement={'#card1'}
-            classToggle={'visible'}
-            triggerHook={0.8}
-          >
-            <BtnContent onClick={() => scrollTo('card2')}>
-              <MoreBtn/>
-            </BtnContent>
           </Scene>
         </Controller>
       </Wrapper>

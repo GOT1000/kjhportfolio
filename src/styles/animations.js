@@ -21,15 +21,15 @@ export const gradientBG = keyframes`
   100%{background-position:0% 50%}
 `
 
-export const float = keyframes`
+export const moreBtnFloat = keyframes`
   0% {
-    transform: translatey(0px);
+    transform: translatey(0px) rotate(45deg);
   }
   50% {
-    transform: translatey(-20px);
+    transform: translatey(-20px) rotate(45deg);
   }
   100% {
-    transform: translatey(0px);
+    transform: translatey(0px) rotate(45deg);
   }
 `
 
