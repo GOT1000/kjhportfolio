@@ -77,6 +77,7 @@ const MenuBtn = styled.div`
 
         ${props => props.transparent ?
           css`
+            position: absolute;
             background: ${colors.NAV_ITEM_COLOR};
           ` : 
           css`

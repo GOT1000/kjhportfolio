@@ -187,11 +187,11 @@ function Card1(props) {
     <Wrapper id={'card1'}>
         <Controller>
           <Scene 
-            duration={'100%'} 
+            duration={'70%'} 
             triggerElement={'#card1'}
             triggerHook={'onLeave'}
             classToggle={'visible'}
-            offset={'-300px'}
+            offset={'-20%'}
             indicators
           >
             <BgWrapper>
