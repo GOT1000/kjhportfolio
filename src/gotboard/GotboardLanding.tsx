@@ -4,7 +4,7 @@ import Router from 'next/router'
 import NProgress from 'nprogress'
 import styled from 'styled-components'
 import { Element } from 'react-scroll'
-import { Controller, Scene } from 'react-scrollmagic'
+import { Waypoint } from 'react-waypoint'
 
 // contexts
 // hooks
@@ -49,6 +49,7 @@ export default function() {
         setIsMobileMenuToggle(!isMobileMenuToggle)
     }
 
+    const [isScrolled, setIsScrolled] = useState(false);
     const [IsModalOpen, setIsModalOpen] = useState(false);
     const [modalItem, setModalItem] = useState(null);
     const [modalStyle, setModalStyle] = useState(null);
@@ -64,8 +65,13 @@ export default function() {
         setIsModalOpen(false);
     }
 
+    const handleScrolled = () => {
+        setIsScrolled(true);
+    }
+
     useEffect(() => {
-    }, [])
+        console.log(isScrolled);
+    }, [isScrolled])
 
     return (
         <Container>
@@ -81,20 +87,15 @@ export default function() {
             <div style={{ width: '100%' }}>
             </div>
             <WrapperContainer>
-                <div id={'nav'}></div>
-                <Controller>
-                    <Scene
-                        triggerElement={'#nav'}
-                        triggerHook={'onLeave'}
-                        classToggle={'transparent'}
-                        indicators
-                    >
-                        <Navbar
-                            isMobileMenuToggle={isMobileMenuToggle}
-                            onMobileMenuToggle={toggleMobileMenu}
-                        />
-                    </Scene>
-                </Controller>
+                <Waypoint 
+                    onEnter={() => setIsScrolled(false)}
+                    onLeave={() => setIsScrolled(true)}
+                />
+                <Navbar
+                    isScrolled={isScrolled}
+                    isMobileMenuToggle={isMobileMenuToggle}
+                    onMobileMenuToggle={toggleMobileMenu}
+                />
                 <Wrapper name={'card1'}>
                     <Card1/>
                 </Wrapper>

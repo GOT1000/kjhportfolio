@@ -1,6 +1,7 @@
 import React from 'react'
 import styled, { css } from 'styled-components'
 import Link from 'next/link'
+
 // components
 import NavLinks from './NavLinks';
 import MobileNavbar from './MobileNavbar';
@@ -10,6 +11,7 @@ import * as colors from 'styles/colors'
 import * as sizes from 'styles/sizes'
 import { mobile } from 'styles/media'
 import rem from 'styles/rem'
+import { checkPropTypes } from 'prop-types';
 
 
 const Wrapper = styled.div`
@@ -27,13 +29,16 @@ const Wrapper = styled.div`
     color: ${colors.NAV_ITEM_COLOR};
     padding: 0;
 
-    background: #fff;
-    color: ${colors.NAV_ITEM_COLOR2};
-    border-bottom: ${rem(1)} solid ${colors.NAV_BORDER};
-
-    &.transparent {
-        background-color: transparent;
-    }
+    ${props => props.isScrolled ? 
+        css`
+            background: #fff;
+            color: ${colors.NAV_ITEM_COLOR2};
+            border-bottom: ${rem(1)} solid ${colors.NAV_BORDER};
+        ` : 
+        css`
+            background-color: transparent;
+        `
+    }å
 `
 const StartWrapper = styled.div`
     display: flex;
@@ -60,23 +65,25 @@ const NormalNavbar = styled.div`
 `
 
 function Navbar(props) {
-  const { isMobileMenuToggle, onMobileMenuToggle } = props
+  const { isScrolled, isMobileMenuToggle, onMobileMenuToggle } = props
   return (
-    <Wrapper>
+    <Wrapper
+        isScrolled={isScrolled}
+    >
         <NormalNavbar>
             <StartWrapper>
                 <Logo/>
             </StartWrapper>
             <EndWrapper>
-                <NavLinks/>
+                <NavLinks/> 
             </EndWrapper>
         </NormalNavbar>
         <MobileNavbar
+            transparent={!isScrolled}
             isMobileMenuToggle={isMobileMenuToggle}
             onMobileMenuToggle={onMobileMenuToggle}
         />
     </Wrapper>
-    
   )
 }
 
