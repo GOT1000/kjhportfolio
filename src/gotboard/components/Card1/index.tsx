@@ -63,10 +63,10 @@ const Title = styled.h1`
     transform: translateY(50px);
 
     ${mobile(css`
-      font-size: ${rem(55)};
+      font-size: ${rem(54)};
     `)}
     ${mobile2(css`
-      font-size: ${rem(45)};
+      font-size: ${rem(42)};
     `)}
   `
 
@@ -90,12 +90,12 @@ const Content = styled.div`
     max-width: 100%;
     line-height: 1.2;
     margin: 0 auto;
-    padding: 0 ${rem(20)};
+    padding: 0 ${rem(30)};
     box-sizing: border-box;
     display: block;
     transition: opacity 2s cubic-bezier(0.19, 1, 0.22, 1) .3s ,transform 2s cubic-bezier(0.19, 1, 0.22, 1) .3s;
 
-    font-family: NanumSquare;
+    font-family: NanumSquareL;
     font-weight: 300;
     word-break: keep-all;
 
@@ -114,7 +114,7 @@ const Content = styled.div`
     }
 
     ${mobile(css`
-      padding: 0 ${rem(10)};
+      padding: 0 ${rem(20)};
     `)};
 `
 

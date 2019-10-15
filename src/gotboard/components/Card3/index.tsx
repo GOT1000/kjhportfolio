@@ -85,7 +85,6 @@ className: props.isOpen ? 'active' : '',
 }))`
 flex: 0 0 50%;
 padding: ${rem(15)};
-transition-delay: ${props => props.duration};
 
 ${mobile(css`
   max-width: ${rem(500)};

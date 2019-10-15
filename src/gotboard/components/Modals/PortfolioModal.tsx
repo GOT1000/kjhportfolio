@@ -118,7 +118,7 @@ const BtnWrapper = styled.div`
     display: flex;
     position: absolute;
     width: 100%;
-    padding: ${rem(20)};
+    padding: 0 ${rem(20)} ${rem(20)} ${rem(20)};
     bottom: 0;
     left: 0;
     justify-content: space-between;
