@@ -99,6 +99,18 @@ const PortfolioWrapper = styled.div`
   max-width: ${rem(850)};
   margin: ${rem(50)} auto ${rem(20)} auto;
 
+  &.visible ${ThumbnailWrapper} {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  
+  ${ThumbnailWrapper} {
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+
   ${mobile(css`
     width: 100%;
     flex-direction: column;
@@ -127,18 +139,6 @@ const PortfolioWrapper = styled.div`
         opacity: 1;
         transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
       }
-    }
-    
-    &.visible ${ThumbnailWrapper} {
-      opacity: 1;
-      transform: translateY(0);
-      transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
-    }
-    
-    ${ThumbnailWrapper} {
-      opacity: 0;
-      transform: translateY(50px);
-      transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
     }
   `)}
 `

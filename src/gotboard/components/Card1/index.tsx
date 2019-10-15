@@ -63,10 +63,10 @@ const Title = styled.h1`
     transform: translateY(50px);
 
     ${mobile(css`
-      font-size: ${rem(54)};
+      font-size: ${rem(44)};
     `)}
     ${mobile2(css`
-      font-size: ${rem(42)};
+      font-size: ${rem(36)};
     `)}
   `
 
@@ -81,7 +81,7 @@ const SmallTitle = styled.h1`
     transform: translateY(50px);
 
     ${mobile(css`
-      font-size: ${rem(28)};
+      font-size: ${rem(24)};
     `)}
 `
 
@@ -114,7 +114,7 @@ const Content = styled.div`
     }
 
     ${mobile(css`
-      padding: 0 ${rem(20)};
+      padding: 0 ${rem(12)};
     `)};
 `
 
