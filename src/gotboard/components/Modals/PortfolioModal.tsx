@@ -57,9 +57,9 @@ font-family: 'NanumSquare';
 const SwiperContent = styled.div`
 width: 100%;
 height: 100%;
+
 ${setImgBackground(css`
     background-image: url("${props => props.background}");
-    background-size: cover;
 `)}
 `
 
@@ -105,92 +105,48 @@ font-family: 'NanumGothic';
 
 .content {
     display: block;
+    width: 100%;
     height: 100%;
     overflow: scroll;
+    word-break: keep-all;
     font-size: ${rem(15)};
     line-height: ${rem(20)};
 }
 `
 
 const BtnWrapper = styled.div`
-display: flex;
-position: absolute;
-width: 100%;
-padding: ${rem(20)};
-bottom: 0;
-left: 0;
-justify-content: space-between;
+    display: flex;
+    position: absolute;
+    width: 100%;
+    padding: ${rem(20)};
+    bottom: 0;
+    left: 0;
+    justify-content: space-between;
+
+    .first-side, .last-side {
+        display: flex;
+    }
 `
 
 const MoreBtn = styled.div`
-display: block;
-padding: ${rem(15)} ${rem(20)};
-cursor: pointer;
-background-color: transparent;
-color: #1B242F;
-font-size: ${rem(17)};
+    width: ${rem(30)};
+    height: ${rem(30)};
+    cursor: pointer;
 
-border: 1px solid #1B242F;
+    &:not(:first-child) {
+        margin-left: ${rem(20)};
+    }
 
-&:hover {
-    opacity: .7;
-}
+    transition: opacity .2s ease;
 
-&::before, &::after {
-    content:"";
-    width: 0;
-    height: 2px;
-    position: absolute;
-    transition: all 0.2s linear;
-    background: #fff;
-    transition-delay: 0s;
-}        
+    &:hover {
+        opacity: 0.6;
+        transition: opacity .2s ease;
+    }
 
-span::before, span::after {
-    content:"";
-    width:2px;
-    height:0;
-    position: absolute;
-    transition: all 0.2s linear;
-    background: #fff;
-    transition-delay: 0.2s;
-} 
+    ${props => css`background-image: url("${props.imgSrc}");`}
 
-&:hover::before, &:hover::after {
-    width: 100%;
-}
-
-&:hover span::before, &:hover span::after{
-    height: 100%;
-}
-
-&::before {
-    right: 0;
-    top: 0;
-}
-
-&::after {
-    left: 0;
-    bottom: 0;
-}
-
-span::before {
-    left: 0;
-    top: 0;
-}
-
-span::after  {
-    right: 0;
-    bottom: 0;
-}
-
-&:hover::before, &:hover::after {
-    transition-delay: 0.2s;
-}
-
-&:hover span::before, &:hover span::after{
-    transition-delay: 0s;
-}
+    ${setImgBackground()}   
 `
 
 const CloseBtn = styled.div`
@@ -220,13 +176,13 @@ height: ${rem(33)};
 
 function PortfolioModal({ portfolio, ...props }) {
 
-    const swiperHeight = rem(400);
+    const swiperHeight = rem(360);
     const swiperMobileHeight = rem(250);
 
     const customStyle = css`
         width: 100%;
         height: ${swiperHeight};
-        background-color: red;
+        background-color: #fff;
 
         ${mobile(css`
             height: ${swiperMobileHeight};
@@ -245,6 +201,10 @@ function PortfolioModal({ portfolio, ...props }) {
         )
     }
 
+    const handleHref = (href) => {
+        window.open(href);
+    }
+
     return (
         <Wrapper>
             <SwiperHandler 
@@ -257,21 +217,20 @@ function PortfolioModal({ portfolio, ...props }) {
                     <DetailTitle>{portfolio.title}</DetailTitle>
                     <DetailSmallTitle>{portfolio.smallTitle}</DetailSmallTitle>
                     <DetailContentWrapper>
-                        <div className={'content'}>
-                            {portfolio.description}
-                        </div>
+                        <div className={'content'} dangerouslySetInnerHTML={{__html: portfolio.description}}/>
                     </DetailContentWrapper>
                 </DetailBox>
             </DetailWrapper>
-            {
-                portfolio.href ? 
-                <BtnWrapper>
-                    <MoreBtn>
-                        <span>보러가기</span>
-                    </MoreBtn>
+            <BtnWrapper>
+                <div className={'first-side'}>
+                    {portfolio.href_web ? <MoreBtn onClick={() => handleHref(portfolio.href_web)} imgSrc={'/static/assets/btn/btn_web.png'}/> : null}
+                    {portfolio.href_apple? <MoreBtn onClick={() => handleHref(portfolio.href_web)} imgSrc={'/static/assets/btn/btn_apple.png'}/> : null}
+                    {portfolio.href_android ? <MoreBtn onClick={() => handleHref(portfolio.href_web)} imgSrc={'/static/assets/btn/btn_android.png'}/> : null}
+                </div>
+                <div className={'last-side'}>
                     <CloseBtn onClick={() => props.hideModal()} />
-                </BtnWrapper> : null
-            }
+                </div>
+            </BtnWrapper>
         </Wrapper>
         
     )

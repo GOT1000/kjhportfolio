@@ -6,6 +6,12 @@ export const notMobile = inner => css`
   }
 `;
 
+export const notMobile2 = inner => css`
+  @media (min-width: ${414 / 16}em) {
+    ${inner};
+  }
+`;
+
 export const mobile = inner => css`
   @media (max-width: ${650 / 16}em) {
     ${inner};
@@ -13,7 +19,7 @@ export const mobile = inner => css`
 `;
 
 export const mobile2 = inner => css`
-  @media (max-width: ${400 / 16}em) {
+  @media (max-width: ${414 / 16}em) {
     ${inner};
   }
 `

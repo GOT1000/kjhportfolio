@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { Controller, Scene } from 'react-scrollmagic'
 import useMedia from 'use-media'
@@ -9,9 +9,9 @@ import PortfolioModal from 'gotboard/components/Modals/PortfolioModal'
 // styles
 import * as colors from 'styles/colors'
 import * as sizes from 'styles/sizes'
-import { mobile, notMobile } from 'styles/media'
+import { mobile, notMobile, notMobile2 } from 'styles/media'
 import rem from 'styles/rem'
-import { themeRowFadeOut, themeRowFadeIn, fadeInRight } from 'styles/animations'
+import { themeRowFadeOut, themeRowFadeIn } from 'styles/animations'
 // const
 import { MY_PORTFOLIO, getEntireHeight } from 'lib/const'
 
@@ -95,52 +95,53 @@ ${mobile(css`
 `
 
 const PortfolioWrapper = styled.div`
-display: flex;
-flex-wrap: wrap;
-max-width: ${rem(850)};
-margin: ${rem(50)} auto ${rem(20)} auto;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: ${rem(850)};
+  margin: ${rem(50)} auto ${rem(20)} auto;
 
-${mobile(css`
-  width: 100%;
-  flex-direction: column;
-  margin: ${rem(50)} auto 0;
-  max-width: ${rem(450)};
+  ${mobile(css`
+    width: 100%;
+    flex-direction: column;
+    margin: ${rem(50)} auto 0;
+    max-width: ${rem(450)};
+  `)}
 
-`)}
-
-&:hover ${ThumbnailWrapper}:hover {
-  cursor: pointer;
-  ${Thumbnail} {
-    box-shadow: 0 0 20px rgba(0,0,0,0.25);
-    ${themeRowFadeIn}
-  }
-}
-
-&:hover ${ThumbnailWrapper} {
-  ${Thumbnail} {
-    ${themeRowFadeOut}
-  }
-}
-
-&:not(:hover) ${ThumbnailWrapper} {
-  ${Thumbnail} {
-    transform: scale(1) translateZ(0);
-    opacity: 1;
-    transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
-  }
-}
-
-&.visible ${ThumbnailWrapper} {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
-}
-
-${ThumbnailWrapper} {
-  opacity: 0;
-  transform: translateY(50px);
-  transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
-}
+  ${notMobile2(css`
+    &:hover ${ThumbnailWrapper}:hover {
+      cursor: pointer;
+      ${Thumbnail} {
+        box-shadow: 0 0 20px rgba(0,0,0,0.25);
+        ${themeRowFadeIn}
+      }
+    }
+    
+    &:hover ${ThumbnailWrapper} {
+      ${Thumbnail} {
+        ${themeRowFadeOut}
+      }
+    }
+    
+    &:not(:hover) ${ThumbnailWrapper} {
+      ${Thumbnail} {
+        transform: scale(1) translateZ(0);
+        opacity: 1;
+        transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+      }
+    }
+    
+    &.visible ${ThumbnailWrapper} {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    
+    ${ThumbnailWrapper} {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+    }
+  `)}
 `
 
 function Card3(props) {
@@ -174,7 +175,6 @@ function Card3(props) {
           <Thumbnail 
             className={'thumbnail'} 
             src={item.thumbnail}
-            //onClick={() => openModal(i)}
           />
         </ThumbnailWrapper>
       )

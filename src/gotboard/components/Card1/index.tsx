@@ -95,7 +95,7 @@ const Content = styled.div`
     display: block;
     transition: opacity 2s cubic-bezier(0.19, 1, 0.22, 1) .3s ,transform 2s cubic-bezier(0.19, 1, 0.22, 1) .3s;
 
-    font-family: NanumSquareL;
+    font-family: NanumSquare;
     font-weight: 300;
     word-break: keep-all;
 
@@ -192,7 +192,6 @@ function Card1(props) {
             triggerHook={'onLeave'}
             classToggle={'visible'}
             offset={'-300px'}
-            indicators
           >
             <BgWrapper>
               <Bg />
@@ -207,10 +206,9 @@ function Card1(props) {
             duration={containerHeight} 
             triggerElement={'#card1'}
             classToggle={'visible'}
-            indicators
           >
             <Content>
-              <Title>안녕하세요<br/>ooo의 포트폴리오입니다.</Title>
+              <Title>안녕하세요<br/>김진혁의 포트폴리오입니다.</Title>
               <SmallTitle>Web Full Stack Developer</SmallTitle>
             </Content>
           </Scene>

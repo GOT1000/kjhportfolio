@@ -52,6 +52,7 @@ const TitleWrapper = styled.div`
 const ProfileWrapper = styled.div`
   margin: 0 auto;
   width: 100%;
+  max-width: ${rem(900)};
 
   padding: ${rem(60)};
 
@@ -90,6 +91,8 @@ const DetailTitle = styled.div``
 
 const Detail = styled.div`
   font-family: 'NanumGothic';
+  line-height: 1.2;
+  word-break: keep-all;
 `
 
 const DetailWrapper = styled.div`
@@ -123,7 +126,7 @@ const Status = styled.div`
   `
 
   const StatusTitle = styled.div`
-    width: ${rem(120)};
+    width: ${rem(130)};
     padding: ${rem(6)} 0;
     font-size: ${rem(18)};
     text-align: left;
@@ -259,7 +262,7 @@ function Card2(props) {
                   김진혁
                 </DetailTitle>
                 <Detail>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                안녕하세요 웹 풀스택 개발자 김진혁입니다. javascript를 주로 사용하고 React, Node.js를 전문으로 하고 있습니다. MySQL을 활용한 DB & 프로시저 설계, MongoDB, Typescript 경험이 있습니다.
                 </Detail>
               </DetailWrapper>
             </ProfileWrapper>
