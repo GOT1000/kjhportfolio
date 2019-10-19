@@ -10,6 +10,7 @@ nextApp.prepare()
         const server = express();
 
         server.get('*', (req, res) => {
+            res.setHeader('Cache-Control', 'must-revalidate, max-age: 86400');            
             return handle(req, res)
         });
 

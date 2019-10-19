@@ -95,7 +95,7 @@ const Content = styled.div`
     display: block;
     transition: opacity 2s cubic-bezier(0.19, 1, 0.22, 1) .3s ,transform 2s cubic-bezier(0.19, 1, 0.22, 1) .3s;
 
-    font-family: NanumSquareL;
+    font-family: NanumSquare;
     font-weight: 300;
     word-break: keep-all;
 
@@ -160,33 +160,22 @@ const BtnContent = styled.div`
     bottom: ${rem(30)};
 
     width: 100%;
-    height: ${rem(35)};
+    height: ${rem(80)};
 
     opacity: 0;
     transition: opacity .5s cubic-bezier(0.19, 1, 0.22, 1);
 
-    ${BgWrapper}.visible & {
+    &.visible {
       opacity: 1;
       transition: opacity 1.5s cubic-bezier(0.19, 1, 0.22, 1) .5s;
     }
 `
 
 function Card1(props) {
-
-  const [containerHeight, setContainerHeight] = useState(100);
-
-  const loadContainerHeight = (document) => {
-    setContainerHeight(getEntireHeight(document));
-  }
-
-  useEffect(() => {
-    loadContainerHeight(document);
-  })
-
   return (
     <Wrapper id={'card1'}>
         <Controller>
-          <Scene 
+          {/* <Scene 
             duration={'110%'} 
             triggerElement={'#card1'}
             triggerHook={'onLeave'}
@@ -201,16 +190,31 @@ function Card1(props) {
                 </MoreBtn>
               </BtnContent>
             </BgWrapper>
-          </Scene>
+          </Scene> */}
+          <BgWrapper className={'visible'}>
+              <Bg />
+            </BgWrapper>
           <Scene
-            duration={containerHeight} 
+            duration={props.containerHeight} 
             triggerElement={'#card1'}
             classToggle={'visible'}
           >
             <Content>
-              <Title>안녕하세요<br/>김진혁의 포트폴리오입니다.</Title>
+              <Title>안녕하세요<br/>ooo의 포트폴리오입니다.</Title>
               <SmallTitle>Web Full Stack Developer</SmallTitle>
             </Content>
+          </Scene>
+          <Scene
+            duration={props.containerHeight} 
+            triggerElement={'#card1'}
+            triggerHook={'onEnter'}
+            classToggle={'visible'}
+          >
+              <BtnContent>
+                <MoreBtn  onClick={() => scrollTo('card2')}>
+                  <div className={'btn'}/>
+                </MoreBtn>
+              </BtnContent>
           </Scene>
         </Controller>
       </Wrapper>

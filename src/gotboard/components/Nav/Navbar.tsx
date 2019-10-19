@@ -11,11 +11,40 @@ import * as colors from 'styles/colors'
 import * as sizes from 'styles/sizes'
 import { mobile } from 'styles/media'
 import rem from 'styles/rem'
-import { checkPropTypes } from 'prop-types';
+import * as animations from 'styles/animations';
+// utils
+
 
 
 const Wrapper = styled.div`
     position: fixed;
+
+    ${props => props.isAbsolute ? (
+            css`
+                position: absolute;
+                color: ${colors.NAV_ITEM_COLOR};
+                background-color: transparent;
+            `
+        ) : (
+            props.isCollapsed ? 
+            css`
+                background: #fff;
+                color: ${colors.NAV_ITEM_COLOR2};
+                border-bottom: ${rem(1)} solid ${colors.NAV_BORDER};
+
+                transform-origin: 0% 0%;
+                transform: translate(0, 0%);
+                
+                transition: transform 0.2s cubic-bezier(0.77,0.2,0.05,1.0); 
+            ` : 
+            css`
+                transform-origin: 0% 0%;
+                transform: translate(0, -100%);
+                color: ${colors.NAV_ITEM_COLOR};
+                background-color: transparent;
+            `
+        )}
+    top: 0;
     left: 0;
     z-index: 3;
 
@@ -25,20 +54,7 @@ const Wrapper = styled.div`
     width: 100%;
     height: ${rem(sizes.NAV_HEIGHT)};
 
-    transition: background 300ms ease-out;
-    color: ${colors.NAV_ITEM_COLOR};
     padding: 0;
-
-    ${props => props.isScrolled ? 
-        css`
-            background: #fff;
-            color: ${colors.NAV_ITEM_COLOR2};
-            border-bottom: ${rem(1)} solid ${colors.NAV_BORDER};
-        ` : 
-        css`
-            background-color: transparent;
-        `
-    }å
 `
 const StartWrapper = styled.div`
     display: flex;
@@ -65,11 +81,10 @@ const NormalNavbar = styled.div`
 `
 
 function Navbar(props) {
-  const { isScrolled, isMobileMenuToggle, onMobileMenuToggle } = props
+  const { isAbsolute, isCollapsed, isMobileMenuToggle, onMobileMenuToggle } = props
+
   return (
-    <Wrapper
-        isScrolled={isScrolled}
-    >
+    <Wrapper isAbsolute={isAbsolute} isCollapsed={isCollapsed}>
         <NormalNavbar>
             <StartWrapper>
                 <Logo/>
@@ -79,7 +94,7 @@ function Navbar(props) {
             </EndWrapper>
         </NormalNavbar>
         <MobileNavbar
-            transparent={!isScrolled}
+            transparent={!isCollapsed}
             isMobileMenuToggle={isMobileMenuToggle}
             onMobileMenuToggle={onMobileMenuToggle}
         />

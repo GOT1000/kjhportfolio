@@ -13,7 +13,7 @@ import { mobile } from 'styles/media'
 import { progressbar } from 'styles/animations' 
 import rem from 'styles/rem'
 // consts
-import { MY_STATUS, getEntireHeight } from 'lib/const'
+import { MY_STATUS } from 'lib/const'
 import { checkPropTypes } from 'prop-types';
 
 
@@ -21,7 +21,7 @@ const Wrapper = styled.div`
   background-color: ${colors.CARD2_BACKGROUND};
 
   width: 100%;
-  padding: ${rem(120)} ${rem(20)} ${rem(20)} ${rem(20)};
+  padding: ${rem(180)} ${rem(20)} ${rem(20)} ${rem(20)};
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -207,38 +207,26 @@ const StatusBar = styled.div`
       }
     }
 `
+const StatusBars = (...props) => {
+  return MY_STATUS.map((item, index) => {
+    return (
+      <Status key={index}>
+        <StatusTitle>{item.title}</StatusTitle>
+        <StatusBar status={item.status} duration={item.duration}>
+          <Bar></Bar>
+        </StatusBar>
+      </Status>
+    );
+  })
+}
 
 function Card2(props) {
-  const [containerHeight, setContainerHeight] = useState(100);
-
-  const loadContainerHeight = (document) => {
-    setContainerHeight(getEntireHeight(document));
-  }
-
-
-  const StatusBars = (...props) => {
-    return MY_STATUS.map((item, index) => {
-      return (
-        <Status key={index}>
-          <StatusTitle>{item.title}</StatusTitle>
-          <StatusBar status={item.status} duration={item.duration}>
-            <Bar></Bar>
-          </StatusBar>
-        </Status>
-      );
-    })
-  }
-
-  useEffect(() => {
-    loadContainerHeight(document);
-  })
-
   return (
     <Wrapper id={'card2'}>
       <Controller>
         <div id={'card2_title_wrapper'}></div>
         <Scene
-          duration={containerHeight} 
+          duration={'100%'} 
           triggerElement={'#card2_title_wrapper'}
           triggerHook={0.8}
           classToggle={'visible'}
@@ -250,7 +238,7 @@ function Card2(props) {
         </Scene>
         <div id={'card2_profile_wrapper'}></div>
         <Scene
-            duration={containerHeight} 
+            duration={'100%'} 
             triggerElement={'#card2_profile_wrapper'}
             triggerHook={0.55}
             classToggle={'visible'}
@@ -269,7 +257,7 @@ function Card2(props) {
         </Scene>
         <div id={'card2_status_wrapper'}></div>
         <Scene
-          duration={containerHeight} 
+          duration={props.containerHeight} 
           triggerElement={'#card2_status_wrapper'}
           triggerHook={0.55}
           classToggle={'visible'}

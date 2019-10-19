@@ -108,7 +108,7 @@ const PortfolioWrapper = styled.div`
   ${ThumbnailWrapper} {
     opacity: 0;
     transform: translateY(50px);
-    transition: opacity .55s cubic-bezier(0.19, 1, 0.22, 1),transform .55s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: opacity .75s cubic-bezier(0.19, 1, 0.22, 1),transform .75s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
   ${mobile(css`
@@ -146,30 +146,15 @@ const PortfolioWrapper = styled.div`
 function Card3(props) {
   const { onShowModal, hideModal } = props;
   
-  const [containerHeight, setContainerHeight] = useState(100);
-  const isMobileWidth = useMedia({minWidth: sizes.BREAK_POINT_MOBILE})
-
-  const loadContainerHeight = (document) => {
-    setContainerHeight(getEntireHeight(document));
-  }
-
-  useEffect(() => {
-    loadContainerHeight(document);
-  })
-
   const renderModalBody = (item) => {
     return <PortfolioModal portfolio={item} hideModal={hideModal} />
   }
   const renderPortfolioList = () => {
-
-    const duration = isMobileWidth ? ['2s', '.2s', '.4s', '.4s'] : ['2s', '.4s', '.6s', '.8s']
-  
     return MY_PORTFOLIO.map((item, i) => {
       return (
         <ThumbnailWrapper 
           onClick={() => onShowModal({item: renderModalBody(item), style: customModalWrapperStyle})}
           key={i}
-          duration={duration}
         >
           <Thumbnail 
             className={'thumbnail'} 
@@ -186,7 +171,7 @@ function Card3(props) {
       <Controller>
         <div id={'card3_title_wrapper'}></div>
         <Scene
-          duration={containerHeight} 
+          duration={props.containerHeight} 
           triggerElement={'#card3_title_wrapper'}
           triggerHook={0.8}
           classToggle={'visible'}
@@ -198,7 +183,7 @@ function Card3(props) {
         </Scene>
         <div id={'card3_content'}></div>
         <Scene
-          duration={containerHeight} 
+          duration={props.containerHeight} 
           triggerElement={'#card3_content'}
           triggerHook={0.55}
           classToggle={'visible'}

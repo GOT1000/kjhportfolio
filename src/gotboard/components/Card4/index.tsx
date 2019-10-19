@@ -10,7 +10,7 @@ import { mobile } from 'styles/media'
 import rem from 'styles/rem'
 
 // libs
-import { getEntireHeight, MY_CONTACT } from 'lib/const'
+import { MY_CONTACT } from 'lib/const'
 
 
 const Wrapper = styled.div`
@@ -107,27 +107,18 @@ const ContentWrapper = styled.div`
   ${NameWrapper} {
     opacity: 0;
     transform: translateY(50px);
-    transition: opacity .5s cubic-bezier(0.19, 1, 0.22, 1) .2s, transform .8s cubic-bezier(0.19, 1, 0.22, 1) .2s;
+    transition: opacity .5s cubic-bezier(0.19, 1, 0.22, 1) .2s, transform .8s cubic-bezier(0.19, 1, 0.22, 1);
   }
 
   &.visible ${NameWrapper} {
     opacity: 1;
     transform: translateY(0);
-    transition: opacity .5s cubic-bezier(0.19, 1, 0.22, 1), transform .8s cubic-bezier(0.19, 1, 0.22, 1);
+    transition: opacity .5s cubic-bezier(0.19, 1, 0.22, 1), transform .8s cubic-bezier(0.19, 1, 0.22, 1) .2s;
   }
 `
 
 
 function Card4(props) {
-  const [containerHeight, setContainerHeight] = useState(100);
-
-  const loadContainerHeight = (document) => {
-    setContainerHeight(getEntireHeight(document));
-  }
-
-  useEffect(() => {
-    loadContainerHeight(document);
-  })
 
   const getCurrentYear = () => {
     let d = new Date();
@@ -140,9 +131,9 @@ function Card4(props) {
 
   const renderContact = () => {
     let contactList = MY_CONTACT;
-    return MY_CONTACT.map((item) => {
+    return MY_CONTACT.map((item, index) => {
       return (
-        <Contact onClick={() => handleHref(item.href)} imgSrc={item.src}/>
+        <Contact onClick={() => handleHref(item.href)} imgSrc={item.src} key={index}/>
       )
     })
   }
@@ -152,7 +143,7 @@ function Card4(props) {
       <Controller>
         <div id={'card4_title_wrapper'}></div>
         <Scene
-          duration={containerHeight} 
+          duration={props.containerHeight} 
           triggerElement={'#card4_title_wrapper'}
           triggerHook={1}
           classToggle={'visible'}
@@ -164,7 +155,7 @@ function Card4(props) {
         </Scene>
         <div id={'card4_content_wrapper'}></div>
         <Scene
-          duration={containerHeight} 
+          duration={props.containerHeight} 
           triggerElement={'#card4_content_wrapper'}
           triggerHook={0.8}
           classToggle={'visible'}

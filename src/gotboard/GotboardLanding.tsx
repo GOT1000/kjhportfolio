@@ -15,7 +15,10 @@ import Card2 from 'gotboard/components/Card2'
 import Card3 from 'gotboard/components/Card3'
 import Card4 from 'gotboard/components/Card4'
 import Modal from 'common/Modal'
+import Overlay from 'gotboard/components/Nav/Overlay'
 // styles
+// utils
+import { getEntireHeight } from 'lib/const'
 
 
 const NRouter = Router
@@ -43,16 +46,22 @@ const Wrapper = styled(Element).attrs((/* props */) => ({
     box-sizing: border-box;
   `;
 
+const Container = styled.div`
+  position: relative;
+`
+
 export default function() {
     const [ isMobileMenuToggle, setIsMobileMenuToggle ] = useState(false)
     const toggleMobileMenu = () => {
         setIsMobileMenuToggle(!isMobileMenuToggle)
     }
 
-    const [isScrolled, setIsScrolled] = useState(false);
+    const [scrollOffset, setScrollOffset] = useState(0);
+    const [isCollapsed, setIsCollapsed] = useState(false);
     const [IsModalOpen, setIsModalOpen] = useState(false);
     const [modalItem, setModalItem] = useState(null);
     const [modalStyle, setModalStyle] = useState(null);
+    const [containerHeight, setContainerHeight] = useState(0);
 
     const showModal = (props) => {
         setModalItem(props.item);
@@ -65,13 +74,26 @@ export default function() {
         setIsModalOpen(false);
     }
 
-    const handleScrolled = () => {
-        setIsScrolled(true);
+    const handleCollapse = () => {
+        const container = document.getElementById('card2');
+        let collapse = window.pageYOffset >= container.offsetTop;
+        setIsCollapsed(collapse);
+    }
+
+    const loadContainerHeight = (document) => {
+        setContainerHeight(getEntireHeight(document));
     }
 
     useEffect(() => {
-        console.log(isScrolled);
-    }, [isScrolled])
+        handleCollapse();
+        loadContainerHeight(document);
+        window.addEventListener('scroll', () => handleCollapse());
+        window.addEventListener('resize', () => loadContainerHeight(document));
+        return (() => {
+            window.removeEventListener('scroll', () => handleCollapse())
+            window.removeEventListener('resize', () => loadContainerHeight(document))
+        })
+    }, [])
 
     return (
         <Container>
@@ -84,32 +106,37 @@ export default function() {
                 <link rel="stylesheet" type="text/css" href="/static/css/slick.css" />
                 <link rel="stylesheet" type="text/css" href="/static/css/slick-theme.css" />
             </Head>
-            <div style={{ width: '100%' }}>
-            </div>
             <WrapperContainer>
-                <Waypoint 
-                    onEnter={() => setIsScrolled(false)}
-                    onLeave={() => setIsScrolled(true)}
+                <Navbar
+                    isAbsolute={true}
+                    isMobileMenuToggle={isMobileMenuToggle}
+                    onMobileMenuToggle={toggleMobileMenu}
                 />
                 <Navbar
-                    isScrolled={isScrolled}
+                    isCollapsed={isCollapsed}
                     isMobileMenuToggle={isMobileMenuToggle}
                     onMobileMenuToggle={toggleMobileMenu}
                 />
                 <Wrapper name={'card1'}>
-                    <Card1/>
+                    <Card1 containerHeight={containerHeight}/>
                 </Wrapper>
                 <Wrapper name={'card2'}>
-                    <Card2/>
+                    <Card2 
+                        handleCollapse={handleCollapse}
+                        containerHeight={containerHeight}
+                    />
                 </Wrapper>
                 <Wrapper name={'card3'}>
                     <Card3 
                         onShowModal={showModal}
                         hideModal={hideModal}
+                        containerHeight={containerHeight}
                     />
                 </Wrapper>
                 <Wrapper name={'card4'}>
-                    <Card4/>
+                    <Card4
+                        containerHeight={containerHeight}
+                    />
                 </Wrapper>
             </WrapperContainer>
             <Modal
@@ -118,10 +145,11 @@ export default function() {
                 modalStyle={modalStyle}
                 modalItem={modalItem}
             />
+            <Overlay 
+                isMobileMenuToggle={isMobileMenuToggle}
+                onMobileMenuToggle={toggleMobileMenu}
+            />
         </Container>
     )
 }
 
-const Container = styled.div`
-  position: relative;
-`
