@@ -200,7 +200,7 @@ function Card1(props) {
             classToggle={'visible'}
           >
             <Content>
-              <Title>안녕하세요<br/>ooo의 포트폴리오입니다.</Title>
+              <Title>안녕하세요<br/>김진혁의 포트폴리오입니다.</Title>
               <SmallTitle>Web Full Stack Developer</SmallTitle>
             </Content>
           </Scene>
