@@ -54,7 +54,7 @@ const ProfileWrapper = styled.div`
   width: 100%;
   max-width: ${rem(900)};
 
-  padding: ${rem(60)};
+  padding: ${rem(60)} ${rem(10)};
 
   opacity: 0;
   transition: opacity 2s cubic-bezier(0.19, 1, 0.22, 1);
@@ -65,7 +65,7 @@ const ProfileWrapper = styled.div`
   }
 
   ${mobile(css`
-    padding: ${rem(30)} 0;
+    padding: ${rem(30)} ${rem(10)};
   `)}
 `
 
@@ -259,7 +259,7 @@ function Card2(props) {
         <Scene
           duration={props.containerHeight} 
           triggerElement={'#card2_status_wrapper'}
-          triggerHook={0.55}
+          triggerHook={0.85}
           classToggle={'visible'}
         >
             <StatusWrapper>
