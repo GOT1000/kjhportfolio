@@ -83,7 +83,8 @@ const Profile = styled.div`
   `)};
 
   ${sizes.setImgBackground(css`
-    background-image: url("/static/assets/nike.png");
+    background-size: cover;
+    ${props => css`background-image: url("${props.src}");`}
   `)}
 `
 
@@ -244,7 +245,7 @@ function Card2(props) {
             classToggle={'visible'}
           >
             <ProfileWrapper>
-              <Profile src={'/static/assets/nike.png'} />
+              <Profile src={'/static/assets/profile.jpeg'} />
               <DetailWrapper>
                 <DetailTitle>
                   김진혁
